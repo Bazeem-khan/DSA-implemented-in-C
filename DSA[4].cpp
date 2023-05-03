@@ -20,7 +20,7 @@ void count_nodes(struct linked *);
 void rmv_beg(struct linked **);
 void count_prime(struct linked *);
 void search(struct linked *);
-void search_rep(struct linked *);
+void search_rep(struct linked **);
 void add_spec_loc(struct linked **);
 
 struct linked
@@ -103,7 +103,7 @@ int main()
 		}
 		else if(c=='N')
 		{
-			search_rep(base);
+			search_rep(&base);
 		}
 		else if(c=='O')
 		{
@@ -417,15 +417,19 @@ void count_prime(struct linked *start)
 	{
 		while(temp!=NULL)
 		{
+			n=2;
 			while(n<=temp->data)
 			{
 				if(temp->data%n==0)
 				{
-					flag++;;
 					break;
 				}
 				n++;
 				
+			}
+			if(n==temp->data)
+			{
+				flag++;
 			}
 			temp=temp->link;
 		}
@@ -434,7 +438,7 @@ void count_prime(struct linked *start)
 }
 void search(struct linked *start)
 {
-	int x;
+	int x,flag=0;
 	struct linked *temp;
 	temp=start;
 	
@@ -449,12 +453,64 @@ void search(struct linked *start)
 		
 		while(temp!=NULL)
 		{
-			
+			if(temp->data==x)
+			{
+				flag=1;
+				break;
+			}
+			temp=temp->link;				
+		}
+		if(flag==1)
+		{
+			printf("\nNumber found");
+		}
+		else if(flag==0)
+		{
+			printf("\nNumber not found");
 		}
 	}
 }
-void search_rep(struct linked *start)
+void search_rep(struct linked **start)
 {
+	int x,flag=0;
+	struct linked *temp;
+	temp=*start;
+	
+	if(*start==NULL)
+	{
+		printf("\nLinked list is empty");
+	}
+	else
+	{
+		printf("\nEnter the number you want search");
+		scanf("%d",&x);
+		
+		while(temp!=NULL)
+		{
+			if(temp->data==x)
+			{
+				flag=1;
+				break;
+			}
+			temp=temp->link;				
+		}
+		if(flag==1)
+		{
+			printf("\nNumber found");
+			
+			printf("\nEnter the the number you want to replace it with");
+			scanf("%d",&x);
+			
+			temp->data=x;
+			
+			printf("\nNumber replaced");
+		}
+		else if(flag==0)
+		{
+			printf("\nNumber not found");
+		}
+		
+	}	
 }
 void add_spec_loc(struct linked **start)
 {

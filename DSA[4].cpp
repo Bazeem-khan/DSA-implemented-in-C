@@ -37,7 +37,7 @@ int main()
 	
 	while(x)
 	{
-		printf("\nEnter your choice   A for add    D for Display    S for sum of even    C for sum of odd    F to count even    I to count odd    O to display odd    H to display even     G to show greatest number    R to remove from end    B to count nodes    J to find smallest    K to remove begning    L to count prime    M to search a number    N to search and replace a number    O to add at specific locaion    E for exit");
+		printf("\nEnter your choice   A for add    D for Display    S for sum of even    C for sum of odd    F to count even    I to count odd    O to display odd    H to display even     G to show greatest number    R to remove from end    B to count nodes    J to find smallest    K to remove begning    P to count prime    M to search a number    N to search and replace a number    L to add at specific locaion    E for exit");
 		scanf("%c",&c);
 		c=toupper(c);
 		
@@ -93,7 +93,7 @@ int main()
 		{
 			rmv_beg(&base);
 		}
-		else if(c=='L')
+		else if(c=='P')
 		{
 			count_prime(base);
 		}
@@ -105,7 +105,7 @@ int main()
 		{
 			search_rep(&base);
 		}
-		else if(c=='O')
+		else if(c=='L')
 		{
 			add_spec_loc(&base);
 		}
@@ -514,4 +514,40 @@ void search_rep(struct linked **start)
 }
 void add_spec_loc(struct linked **start)
 {
+	int x,flag=0,i=0;
+	struct linked *temp;
+	
+	temp=*start;
+	
+	if(*start=NULL)
+	{
+		printf("\nLinked list is empty");
+	}
+	else 
+	{
+		while(temp!=NULL)
+		{
+			flag++;
+			temp=temp->link;
+		}
+		printf("\nEnter the number you want to add");
+		scanf("%d",&x);
+		
+		printf("Enter the location where you want to add the number between 1 to %d",flag+1);
+		scanf("%d",&flag);
+		
+		temp=*start;
+		while(i<flag)
+		{
+			i++;
+			temp=temp->link;
+		}
+		while(temp!=NULL)
+		{
+			i=temp->data;
+			temp->data=x;
+			
+		}
+		
+	}
 }

@@ -514,40 +514,47 @@ void search_rep(struct linked **start)
 }
 void add_spec_loc(struct linked **start)
 {
-	int x,flag=0,i=0;
-	struct linked *temp;
+	int x,flag=0,i=0,l=0;
+	struct linked *temp,*index,*pre;
 	
 	temp=*start;
 	
+	
+	temp=(struct linked *)malloc(sizeof(struct linked));
+	printf("\nEnter the number you want to add");
+	scanf("%d",&temp->data);
+	
 	if(*start=NULL)
 	{
-		printf("\nLinked list is empty");
+		*start=temp;
+		temp->link=NULL;
 	}
 	else 
 	{
-		while(temp!=NULL)
+		index=*start;
+		while(index!=NULL)
 		{
+			index=index->link;
 			flag++;
-			temp=temp->link;
-		}
-		printf("\nEnter the number you want to add");
-		scanf("%d",&x);
-		
-		printf("Enter the location where you want to add the number between 1 to %d",flag+1);
-		scanf("%d",&flag);
-		
-		temp=*start;
-		while(i<flag)
-		{
-			i++;
-			temp=temp->link;
-		}
-		while(temp!=NULL)
-		{
-			i=temp->data;
-			temp->data=x;
 			
 		}
 		
+		printf("Enter the location where you want to add the number between 1 to %d",flag+1);
+		scanf("%d",&l);
+		
+		index=*start;
+		flag=1;
+		while(index!=NULL)
+		{
+			if(flag==l)
+			{
+				break;
+			}
+			pre=index;
+			index=index->link;
+			flag++;
+		}
+		pre->link=temp;
+		temp->link=index;
 	}
 }

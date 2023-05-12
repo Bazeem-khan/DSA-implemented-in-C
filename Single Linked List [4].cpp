@@ -1,27 +1,35 @@
-//(LINKED-L.C)
 #include<stdio.h>
 //#include<stddef.h>
 #include<ctype.h>//for toupper
 #include<stdlib.h>// for malloc
 #include<conio.h>
 
-void add(struct linked **);
-void dis(struct linked *);
-void sum_even(struct linked *);
-void sum_odd(struct linked *);
-void count_odd(struct linked *);
-void count_even(struct linked *);
-void odd(struct linked *);
-void even(struct linked *);
-void greatest(struct linked *);
-void smallest(struct linked *);
-void rmv_end(struct linked **);
-void count_nodes(struct linked *);
-void rmv_beg(struct linked **);
-void count_prime(struct linked *);
-void search(struct linked *);
-void search_rep(struct linked **);
-void add_spec_loc(struct linked **);
+
+// function decleration
+
+void add(struct linked **);//----------------------A
+void dis(struct linked *);//-----------------------D
+void sum_even(struct linked *);//------------------S
+void sum_odd(struct linked *);//-------------------C
+void count_odd(struct linked *);//-----------------I
+void count_even(struct linked *);//----------------F
+void odd(struct linked *);//-----------------------O
+void even(struct linked *);//----------------------H
+void greatest(struct linked *);//------------------G
+void smallest(struct linked *);//------------------J
+void rmv_end(struct linked **);//------------------R
+void count_nodes(struct linked *);//---------------B
+void rmv_beg(struct linked **);//------------------K
+void count_prime(struct linked *);//---------------P
+void search(struct linked *);//--------------------M
+void search_rep(struct linked **);//---------------N
+void add_spec_loc(struct linked **);//-------------L
+void rmv_spec_loc(struct linked **);//-------------X
+void rmv_spec_number(struct linked **);//----------Q   
+void pn(struct linked *);//------------------------W
+void sum(struct linked *);//-----------------------T
+void multi(struct linked *);//---------------------U
+void split(struct linked **);//--------------------V 
 
 struct linked
 {
@@ -37,7 +45,7 @@ int main()
 	
 	while(x)
 	{
-		printf("\nEnter your choice   A for add    D for Display    S for sum of even    C for sum of odd    F to count even    I to count odd    O to display odd    H to display even     G to show greatest number    R to remove from end    B to count nodes    J to find smallest    K to remove begning    P to count prime    M to search a number    N to search and replace a number    L to add at specific locaion    E for exit");
+		printf("\nEnter your choice   \nA for add    D for Display    S for sum of even    C for sum of odd    F to count even    I to count odd    O to display odd    H to display even     G to show greatest number\nR to remove from end    B to count nodes    J to find smallest    K to remove begning    P to count prime    M to search a number    N to search and replace a number    L to add at specific locaion \nX t remove at specific location    Q  to remove a number    W to count positive and negative numbers    T fro sum of numbers    U for multiplication of numbers     V to split the linked list     E for exit");
 		scanf("%c",&c);
 		c=toupper(c);
 		
@@ -108,6 +116,30 @@ int main()
 		else if(c=='L')
 		{
 			add_spec_loc(&base);
+		}
+		else if (c=='Q')
+		{
+			rmv_spec_number(&base);
+		}
+		else if(c=='W')
+		{
+			pn(base);
+		}
+		else if(c=='T')
+		{
+			sum(base);
+		}
+		else if(c=='U')
+		{
+			multi(base);
+		}
+		else if(c=='V')
+		{
+			split(&base);
+		}
+		else if(c=='X')
+		{
+			rmv_spec_loc(&base);
 		}
 		else if(c=='E')
 		{
@@ -550,4 +582,159 @@ void add_spec_loc(struct linked **start)
 		}
 		
 	}
+}
+void rmv_spec_number(struct linked **start)
+{
+	int x,i,flag=0;
+	struct linked *temp,*pre;
+	
+	if(*start==NULL)
+	{
+		printf("\nLinked list is empty");
+	}
+	else
+	{
+		temp=*start;
+		pre=temp;
+		
+		printf("Enter the number you want to remove:");
+		scanf("%d",&x);
+		
+		while(temp!=NULL)
+		{
+			if(temp->data==x)
+			{
+				pre->link=temp->link;
+				flag=1;
+			}
+			pre=temp;
+			temp=temp->link;
+		
+		}
+		if(flag==1)
+		{
+			printf("\nNumber removed");
+		}
+		else
+		{
+			printf("\nNumber not found");
+		}
+	
+		
+	}
+}
+void rmv_spec_loc(struct linked **start)
+{
+	struct linked *temp,*pre;
+    int c, i;
+    if (*start==NULL)
+    {
+    	printf("\nLinked list is empty");
+	}
+	else
+	{
+		i=0;
+		temp=*start;
+		
+		while(temp!=NULL)
+		{
+			i++;
+			temp=temp->link;
+		}
+		printf("\nEnter the location between 1 to %d",i);
+		scanf("%d",&c);
+		
+		if(c>0 && c<=i)
+		{
+			temp=*start;
+			i=1;
+			while(temp!=NULL)
+			{
+				if(i==c)
+				{
+					break;
+				}
+				i++;
+				pre=temp;
+				temp=temp->link;
+			}
+			pre->link=temp->link;
+			printf("\nNode deleted");
+		}
+		else
+		{
+			printf("\nThis location does not exists");
+		}
+	}
+}
+void pn(struct linked *start)
+{
+	struct linked *temp;
+	int p=0,n=0;
+	
+	if(start==NULL)
+	{
+		printf("\nLinked list is empty");
+	}
+	else
+	{
+		temp=start;
+		while(temp!=NULL)
+		{
+			if(temp->data>=0)
+			{
+				p++;
+			}
+			else if(temp->data<0)
+			{
+				n++;
+			}
+			temp=temp->link;	
+		}
+		printf("\nNumber of Positive numbers=%d\nNumber of Negative numbers=%d",p,n);
+	}
+}
+void sum(struct linked *start)
+{
+	int s=0;
+	struct linked *temp;
+	
+	if(start==NULL)
+	{
+		printf("\nLinked list is empty");
+	}
+	else
+	{
+		temp=start;
+		while(temp!=NULL)
+		{
+			s+=temp->data;
+			temp=temp->link;
+		}
+		printf("\nSum of data of nodes=%d",s);
+	}
+}
+void multi(struct linked *start)
+{
+	int m=1;
+	struct linked *temp;
+	
+	if(start==NULL)
+	{
+		printf("\nLinked list is empty");
+	}
+	else
+	{
+		temp=start;
+		while(temp!=NULL)
+		{
+			m*=temp->data;
+			temp=temp->link;
+		}
+		printf("\nMultiplication of data of nodes=%d",m);
+	}
+}
+void split(struct linked **start)
+{
+	
 }

@@ -15,6 +15,10 @@ void disp_beg(struct linked *);//---------------------D
 void search(struct linked *);//-----------------------S
 void search_repl(struct linked **);//-----------------R
 void fact_node(struct linked *);//--------------------F
+void even(struct linked *);//-------------------------C
+void add_beg(struct linked **);//---------------------B
+void del_beg(struct linked **);//---------------------G
+void del_last(struct linked **);//--------------------H
 
 int main()
 {
@@ -24,7 +28,7 @@ int main()
 	
 	while(x)
 	{
-		printf("\nEnter your choice\nA t add from last   D to display from begining    S to search a number   R to replace a number   F to calculate factorial of each number\nE to exit");
+		printf("\nEnter your choice\nA t add from last   D to display from begining    S to search a number   R to replace a number   F to calculate factorial of each number\nC for Even    B to add at begining    G to delete at begining    H to delete at last    E to exit");
 		scanf("%c",&c);
 		c=toupper(c);
 		
@@ -47,6 +51,22 @@ int main()
 		else if(c=='F')
 		{
 			fact_node(base);
+		}
+		else if(c=='C')
+		{
+			even(base);
+		}
+		else if(c=='B')
+		{
+			add_beg(&base);
+		}
+		else if(c=='G')
+		{
+			del_beg(&base);
+		}
+		else if(c=='H')
+		{
+			del_last(&base);
 		}
 		else if(c=='E')
 		{
@@ -94,7 +114,7 @@ void disp_beg(struct linked *start)
 		temp=start;
 		while(temp!=NULL)
 		{
-			printf("\n%d",temp->data);
+			printf("%d ",temp->data);
 			temp=temp->right;
 		}
 	}
@@ -198,3 +218,94 @@ void fact_node(struct linked *start)
 		}
 	}
 }
+//---------------------------------------------TO COUNT EVEN NUMBERS,SUM OF EVEN NUMBERS,DISPLAY EVEN NUMBERS-----------------------------------------------------//
+void even(struct linked *start)
+{
+	int e=0,c=0,s=0;
+	struct linked *temp;
+	
+	if(start==NULL)
+	{
+		printf("\nLinked list is empty");
+	}
+	else
+	{
+		temp=start;
+		while(temp!=NULL)
+		{
+			if(temp->data%2==0)
+			{
+				printf("\n%d",temp->data);
+				s+=temp->data;
+				c++;
+			}
+			temp=temp->right;
+		}
+		printf("\nSum of even numbers=%d",s);
+		printf("\nNumber of even numbers=%d",c);
+	}
+}
+//---------------------------------------------TO NODE AT BEGINING-----------------------------------------------------//
+void add_beg(struct linked **start)
+{
+	struct linked *temp,*pre;
+	
+	temp=(struct linked *)malloc(sizeof(struct linked));
+	printf("\nEntet the number");
+	scanf("%d",&temp->data);
+	temp->left=NULL;
+	
+	if(*start!=NULL)
+	{
+		pre=*start;
+		pre->left=temp;
+	}
+	temp->right=*start;
+	*start=temp;
+}
+//--------------------------------------------TO DELETE A NODE AT BEGINING------------------------------------------------------//
+void del_beg(struct linked **start)
+{
+	struct linked *temp,*nxt;
+	
+	if(*start==NULL)
+	{
+		printf("\nLinked list is empty");
+	}
+	else
+	{
+		temp=*start;
+		*start=temp->right;
+		nxt=temp->right;
+		nxt->left=NULL;
+		printf("\nNode deleted");
+	}
+}
+//------------------------------------------TO DELETE A NODE AT LAST----------------------------------------------//
+void del_last(struct linked **start)
+{
+	struct linked *temp;
+	
+	if(*start==NULL)
+	{
+		printf("\nLinked list is empty");
+	}
+	else
+	{
+		temp=*start;
+		if(temp->right==NULL)
+		{
+			*start=NULL;
+		}
+		else
+		{
+			while(temp->right!=NULL)
+			{
+				temp=temp->right;
+			}
+			temp=temp->left;
+			temp->right=NULL;	
+		}
+	}
+}
+

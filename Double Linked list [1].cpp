@@ -19,6 +19,7 @@ void even(struct linked *);//-------------------------C
 void add_beg(struct linked **);//---------------------B
 void del_beg(struct linked **);//---------------------G
 void del_last(struct linked **);//--------------------H
+void del_num(struct linked **);//---------------------I
 
 int main()
 {
@@ -28,7 +29,7 @@ int main()
 	
 	while(x)
 	{
-		printf("\nEnter your choice\nA t add from last   D to display from begining    S to search a number   R to replace a number   F to calculate factorial of each number\nC for Even    B to add at begining    G to delete at begining    H to delete at last    E to exit");
+		printf("\nEnter your choice\nA t add from last   D to display from begining    S to search a number   R to replace a number   F to calculate factorial of each number\nC for Even    B to add at begining    G to delete at begining    H to delete at last    I to delete a number    E to exit");
 		scanf("%c",&c);
 		c=toupper(c);
 		
@@ -67,6 +68,10 @@ int main()
 		else if(c=='H')
 		{
 			del_last(&base);
+		}
+		else if(c=='I')
+		{
+			del_num(&base);
 		}
 		else if(c=='E')
 		{
@@ -308,4 +313,55 @@ void del_last(struct linked **start)
 		}
 	}
 }
-
+//---------------------------------------------TO DELETE A SPECIFIC NUMBER-----------------------------------------------//
+void del_num(struct linked **start)
+{
+	struct linked *temp,*pre;
+	int flag=0,n;
+	
+	if(*start==NULL)
+	{
+		printf("\nLinked list is empty");
+	}
+	else
+	{
+		temp=*start;
+		printf("\nEnter the number you want ot delete");
+		scanf("%d",&n);
+		
+		while(temp!=NULL)
+		{
+			pre=temp;
+			if(temp->data==n)
+			{
+				flag=1;
+				break;
+			}
+			temp=temp->right;
+		}
+		if(flag==1)
+		{
+			if(temp->left==NULL)
+			{
+				*start=NULL;
+			}
+			else if(temp->right==NULL)
+			{
+				pre=pre->left;
+				pre->right=NULL;
+			}
+			else
+			{
+				temp=temp->right;
+				pre=pre->left;
+				pre->right=temp;
+				temp->left=pre;
+			}
+			printf("\nFound & Deleted");
+		}
+		else
+		{
+			printf("\nNumber not found");
+		}
+	}
+}

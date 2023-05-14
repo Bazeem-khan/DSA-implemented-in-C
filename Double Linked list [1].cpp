@@ -343,8 +343,15 @@ void del_num(struct linked **start)
 		{
 			if(temp->left==NULL)
 			{
-				*start=NULL;
+				*start=temp->right;
+				if(temp->right!=NULL)
+				{
+					temp=temp->right;
+					temp->left=NULL;
+				}
+				
 			}
+			
 			else if(temp->right==NULL)
 			{
 				pre=pre->left;

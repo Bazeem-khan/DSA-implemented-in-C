@@ -30,6 +30,7 @@ void pn(struct linked *);//------------------------W
 void sum(struct linked *);//-----------------------T
 void multi(struct linked *);//---------------------U
 void split(struct linked **);//--------------------V 
+void add_beg(struct linked **);//------------------Y
 
 struct linked
 {
@@ -45,7 +46,7 @@ int main()
 	
 	while(x)
 	{
-		printf("\nEnter your choice   \nA for add    D for Display    S for sum of even    C for sum of odd    F to count even    I to count odd    O to display odd    H to display even     G to show greatest number\nR to remove from end    B to count nodes    J to find smallest    K to remove begning    P to count prime    M to search a number    N to search and replace a number    L to add at specific locaion \nX t remove at specific location    Q  to remove a number    W to count positive and negative numbers    T fro sum of numbers    U for multiplication of numbers     V to split the linked list     E for exit");
+		printf("\nEnter your choice   \nA for add    D for Display    S for sum of even    C for sum of odd    F to count even    I to count odd    O to display odd    H to display even     G to show greatest number\nR to remove from end    B to count nodes    J to find smallest    K to remove begning    P to count prime    M to search a number    N to search and replace a number\nL to add at specific locaion    X t remove at specific location    Q  to remove a number    W to count positive and negative numbers    T fro sum of numbers\nU for multiplication of numbers     Y to add at bgining    V to split the linked list     E for exit");
 		scanf("%c",&c);
 		c=toupper(c);
 		
@@ -140,6 +141,10 @@ int main()
 		else if(c=='X')
 		{
 			rmv_spec_loc(&base);
+		}
+		else if(c=='Y')
+		{
+			add_beg(&base);
 		}
 		else if(c=='E')
 		{
@@ -740,6 +745,16 @@ void multi(struct linked *start)
 		}
 		printf("\nMultiplication of data of nodes=%d",m);
 	}
+}
+void add_beg(struct linked **start)
+{
+	struct linked *temp;
+	
+	temp=(struct linked *)malloc(sizeof(struct linked));
+	printf("\nEnter the number");
+	scanf("%d",&temp->data);
+	temp->link=*start;
+	*start=temp;
 }
 void split(struct linked **start)
 {

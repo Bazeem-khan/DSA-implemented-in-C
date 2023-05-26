@@ -20,6 +20,7 @@ void add_beg(struct linked **);//---------------------B
 void del_beg(struct linked **);//---------------------G
 void del_last(struct linked **);//--------------------H
 void del_num(struct linked **);//---------------------I
+void del_spec_loc(struct linked **);//----------------J
 
 int main()
 {
@@ -29,7 +30,7 @@ int main()
 	
 	while(x)
 	{
-		printf("\nEnter your choice\nA t add from last   D to display from begining    S to search a number   R to replace a number   F to calculate factorial of each number\nC for Even    B to add at begining    G to delete at begining    H to delete at last    I to delete a number    E to exit");
+		printf("\nEnter your choice\nA t add from last   D to display from begining    S to search a number   R to replace a number   F to calculate factorial of each number\nC for Even    B to add at begining    G to delete at begining    H to delete at last    I to delete a number   J to delete specific number    E to exit");
 		scanf("%c",&c);
 		c=toupper(c);
 		
@@ -72,6 +73,10 @@ int main()
 		else if(c=='I')
 		{
 			del_num(&base);
+		}
+		else if(c=='J')
+		{
+			del_spec_loc(&base);
 		}
 		else if(c=='E')
 		{
@@ -370,5 +375,65 @@ void del_num(struct linked **start)
 		{
 			printf("\nNumber not found");
 		}
+	}
+}
+//---------------------------------------------TO DELETE A SPECIFIC LOCATION------------------------------------------//
+void del_spec_loc(struct linked **start)
+{
+	struct linked *temp,*pre;
+	int i,l;
+	
+	if(*start==NULL)
+	{
+		printf("\nLinked list is empty");
+	}
+	else
+	{
+		i=1;
+		temp=*start;
+		while(temp->right!=NULL)
+		{
+			i++;
+			temp=temp->right;
+		}
+		printf("\nEnter th location which you want to delete from 1 to %d",i);
+		scanf("%d",&l);
+		temp=*start;
+		if(l>=1 && l<=i)
+		{
+			while(i<l)
+			{
+				i++;
+				pre=temp;
+				temp=temp->right;
+			}
+			if(temp->left==NULL)
+			{
+				*start=temp->right;
+				if(temp->right!=NULL)
+				{
+					temp=temp->right;
+					temp->left=NULL;
+				}
+			}
+			else if(temp->right==NULL)
+			{
+				temp=temp->left;
+				temp->right=NULL;
+			}
+			else
+			{
+				pre->right=temp->right;
+				temp=temp->right;
+				temp->left=pre;
+			}
+		}
+		else
+		{
+			printf("\nYou enteren wrong location");
+		}
+		
+		
+		
 	}
 }
